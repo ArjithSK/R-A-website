@@ -1,0 +1,560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Club - Industrial Visits</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 400px;
+            background: linear-gradient(135deg, #3a0ca3,#f72585 );
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 50px;
+            border-radius: 20px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-content {
+            text-align: center;
+            color: white;
+            max-width: 800px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+        
+        .hero h2 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease;
+        }
+        
+        .hero p {
+            font-size: 20px;
+            margin-bottom: 30px;
+            animation: fadeInUp 1.2s ease;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+        
+        .section-title h2 {
+            font-size: 36px;
+            color: #1a1a2e;
+            display: inline-block;
+            position: relative;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 4px;
+            background: #e94560;
+            border-radius: 2px;
+        }
+        
+        /* Companies Section */
+        .companies-section {
+            padding: 20px 0 50px;
+        }
+        
+        .companies-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 40px;
+        }
+        
+        .company-row {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 20px;
+        }
+        
+        .company-card {
+            flex: 1;
+            background: white;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.4s ease;
+            position: relative;
+        }
+        
+        .company-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.1);
+        }
+        
+        .company-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: linear-gradient(90deg, #e94560, #0f3460);
+        }
+        
+        .company-image {
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .company-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+        
+        .company-card:hover .company-image img {
+            transform: scale(1.1);
+        }
+        
+        .company-content {
+            padding: 25px;
+        }
+        
+        .company-content h3 {
+            color: #1a1a2e;
+            margin-bottom: 15px;
+            font-size: 24px;
+            position: relative;
+            padding-bottom: 12px;
+        }
+        
+        .company-content h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: #e94560;
+        }
+        
+        .company-content p {
+            color: #666;
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+        
+        .company-info {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin-bottom: 20px;
+            color: #555;
+            font-size: 14px;
+        }
+        
+        .company-info span {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .company-info span::before {
+            content: '•';
+            color: #e94560;
+            font-size: 18px;
+        }
+        
+        .company-highlights {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 12px;
+        }
+        
+        .company-highlights h4 {
+            margin-bottom: 12px;
+            color: #1a1a2e;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .company-highlights h4::before {
+            content: '★';
+            color: #e94560;
+        }
+        
+        .company-highlights ul {
+            list-style-type: none;
+        }
+        
+        .company-highlights li {
+            position: relative;
+            padding-left: 20px;
+            margin-bottom: 8px;
+            color: #555;
+        }
+        
+        .company-highlights li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: #db14b0;
+            font-weight: bold;
+        }
+        
+        /* FAQ Section */
+        .faq-section {
+            background: #240046;
+            padding: 60px 0;
+            border-radius: 20px;
+            margin-top: 30px;
+            margin-bottom: 50px;
+        }
+        
+        .faq-section .section-title h2 {
+            color: white;
+        }
+        
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .faq-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            margin-bottom: 15px;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-item:hover {
+            transform: translateX(5px);
+        }
+        
+        .faq-question {
+            padding: 20px 25px;
+            font-weight: 600;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background: rgba(233, 69, 96, 0.1);
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 22px;
+            font-weight: 300;
+            transition: all 0.3s ease;
+            height: 24px;
+            width: 24px;
+            text-align: center;
+            line-height: 24px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .faq-question.active {
+            background: rgba(233, 69, 96, 0.2);
+        }
+        
+        .faq-question.active::after {
+            content: '−';
+            background: #e94560;
+        }
+        
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s cubic-bezier(0, 1, 0, 1);
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0 25px;
+        }
+        
+        .faq-answer.active {
+            max-height: 1000px;
+            padding: 0 25px 20px;
+            transition: all 0.5s cubic-bezier(1, 0, 1, 0);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .company-row {
+                flex-direction: column;
+            }
+            
+            .company-card {
+                width: 100%;
+            }
+            
+            .hero h2 {
+                font-size: 36px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .hero {
+                height: 350px;
+            }
+            
+            .hero h2 {
+                font-size: 30px;
+            }
+            
+            .hero p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title h2 {
+                font-size: 28px;
+            }
+            
+            .hero {
+                height: 300px;
+            }
+            
+            .company-image {
+                height: 160px;
+            }
+            
+            .company-content h3 {
+                font-size: 20px;
+            }
+        }
+    </style>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Hero Section -->
+            <section class="hero">
+                <div class="hero-content">
+                    <h2>Industrial Visits</h2>
+                    <p>Experience cutting-edge robotics technology firsthand at leading industry partners</p>
+                </div>
+            </section>
+
+            <!-- Companies Section -->
+            <section class="companies-section">
+                <div class="section-title">
+                    <h2>Our Partner Companies</h2>
+                </div>
+                <div class="companies-wrapper">
+                    <!-- Row 1 -->
+                    <div class="company-row">
+                        <!-- TechBot Industries -->
+                        <div class="company-card">
+                            <div class="company-image">
+                                <img src="/api/placeholder/400/200" alt="TechBot Industries">
+                            </div>
+                            <div class="company-content">
+                                <h3>TechBot Industries</h3>
+                                <p>Leading manufacturer of industrial automation robots and cobots for manufacturing applications</p>
+                                <div class="company-info">
+                                    <span>San Francisco, California</span>
+                                    <span>Full Day (9AM - 4PM)</span>
+                                </div>
+                                <div class="company-highlights">
+                                    <h4>Visit Highlights</h4>
+                                    <ul>
+                                        <li>State-of-the-art robot assembly facility</li>
+                                        <li>Interactive robot programming workshop</li>
+                                        <li>Lunch with robotics engineers</li>
+                                        <li>Career counseling session</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- AutoMech Dynamics -->
+                        <div class="company-card">
+                            <div class="company-image">
+                                <img src="/api/placeholder/400/200" alt="AutoMech Dynamics">
+                            </div>
+                            <div class="company-content">
+                                <h3>AutoMech Dynamics</h3>
+                                <p>Specializes in autonomous vehicle technology and mobile robotics for logistics and transportation</p>
+                                <div class="company-info">
+                                    <span>Boston, Massachusetts</span>
+                                    <span>Half Day (10AM - 2PM)</span>
+                                </div>
+                                <div class="company-highlights">
+                                    <h4>Visit Highlights</h4>
+                                    <ul>
+                                        <li>Autonomous vehicle testing track</li>
+                                        <li>Sensor integration demonstration</li>
+                                        <li>Machine learning labs tour</li>
+                                        <li>Networking with research team</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Row 2 -->
+                    <div class="company-row">
+                        <!-- OceanRover Robotics -->
+                        <div class="company-card">
+                            <div class="company-image">
+                                <img src="/api/placeholder/400/200" alt="OceanRover Robotics">
+                            </div>
+                            <div class="company-content">
+                                <h3>OceanRover Robotics</h3>
+                                <p>Specializes in underwater and marine robotics for ocean exploration, research, and resource management</p>
+                                <div class="company-info">
+                                    <span>Seattle, Washington</span>
+                                    <span>Full Day (9AM - 4PM)</span>
+                                </div>
+                                <div class="company-highlights">
+                                    <h4>Visit Highlights</h4>
+                                    <ul>
+                                        <li>Underwater robot testing tank</li>
+                                        <li>Marine exploration technologies</li>
+                                        <li>Ocean data collection systems</li>
+                                        <li>Environmental monitoring robotics</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- MedRobotics Corp -->
+                        <div class="company-card">
+                            <div class="company-image">
+                                <img src="/api/placeholder/400/200" alt="MedRobotics Corp">
+                            </div>
+                            <div class="company-content">
+                                <h3>MedRobotics Corp</h3>
+                                <p>Pioneer in surgical robotics and medical automation systems for healthcare applications</p>
+                                <div class="company-info">
+                                    <span>Minneapolis, Minnesota</span>
+                                    <span>Full Day (8AM - 5PM)</span>
+                                </div>
+                                <div class="company-highlights">
+                                    <h4>Visit Highlights</h4>
+                                    <ul>
+                                        <li>Surgical robot demonstrations</li>
+                                        <li>Biomedical engineering labs</li>
+                                        <li>Patient care robotics showcase</li>
+                                        <li>Q&A with medical robotics team</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section class="faq-section">
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">How do I qualify for an industrial visit?</div>
+                        <div class="faq-answer">
+                            <p>All Robo Club members are eligible to participate in industrial visits. Priority is given to active members who regularly attend club meetings and contribute to projects. Non-members may join if space is available, but will need to pay an additional fee. You must be in good academic standing and have completed at least one semester at the university.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What should I bring to an industrial visit?</div>
+                        <div class="faq-answer">
+                            <p>You should bring your student ID, a notepad, and pen for taking notes. Some companies may have specific requirements regarding clothing (closed-toe shoes, no shorts, etc.) which will be communicated before the visit. Cameras are generally allowed, but some facilities may restrict photography in certain areas. A small backpack for personal items is recommended, along with a water bottle and snacks for longer visits.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How often are industrial visits organized?</div>
+                        <div class="faq-answer">
+                            <p>We typically organize 2-3 industrial visits per semester. The frequency depends on company availability and student interest. Major visits to companies outside our local area are usually organized once per year during spring break or summer. We announce upcoming visits at least three weeks in advance to give students time to register and make arrangements.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Are there any costs associated with the visits?</div>
+                        <div class="faq-answer">
+                            <p>For local companies, visits are usually free for Robo Club members as costs are covered by club funding. For visits requiring travel outside the city, there may be a small fee to cover transportation costs. Overnight trips have additional accommodation costs, though we work to secure discounted rates and sometimes receive sponsorship to reduce expenses. All costs will be clearly communicated during registration.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I get academic credit for industrial visits?</div>
+                        <div class="faq-answer">
+                            <p>While industrial visits don't directly provide course credits, many professors allow students to count these experiences toward project work or as supplementary learning. Engineering and Computer Science departments may offer Independent Study credits if you document your experience and learning outcomes from multiple visits. Additionally, these visits enhance your resume and provide valuable industry connections for internships and job opportunities.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    // Toggle active class on the question
+                    this.classList.toggle('active');
+                    
+                    // Get the corresponding answer
+                    const answer = this.nextElementSibling;
+                    
+                    // Toggle active class on the answer
+                    answer.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Club - Competitions</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #f72585;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        /* Banner */
+        .banner {
+            background-image: url('https://cdnjs.cloudflare.com/ajax/libs/simple-icons/3.0.1/simple-icons.svg');
+            background-size: cover;
+            background-position: center;
+            height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            margin-bottom: 40px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #3a0ca3,#f72585 );
+        }
+        
+        .banner-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: white;
+        }
+        
+        .banner h2 {
+            font-size: 36px;
+            margin-bottom: 15px;
+        }
+        
+        .banner p {
+            font-size: 18px;
+            max-width: 600px;
+        }
+        
+        /* Section Titles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        .section-title h2 {
+            font-size: 32px;
+            color: #3a0ca3;
+            position: relative;
+            display: inline-block;
+            padding-bottom: 10px;
+        }
+        
+        .section-title h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 70%;
+            height: 3px;
+            background: linear-gradient(90deg, #2b5876, #4e4376);
+            display: none;
+        }
+        
+        /* Competition Cards Grid */
+        .competitions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 30px;
+            margin-bottom: 50px;
+            
+        }
+        
+        .competition-card {
+            background-color: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .competition-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.15);
+        }
+        
+        .competition-image {
+            height: 200px;
+            background-color: #ddd;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .competition-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .competition-content {
+            padding: 20px;
+        }
+        
+        .competition-content h3 {
+            color: #3a0ca3;
+            margin-bottom: 10px;
+            font-size: 22px;
+        }
+        
+        .competition-content p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .competition-info {
+            display: flex;
+            justify-content: space-between;
+            color: #777;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+        
+        .competition-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #eee;
+        }
+        
+        .competition-details h4 {
+            margin-bottom: 8px;
+            color: #01090c;
+        }
+        
+        .competition-details ul {
+            padding-left: 20px;
+            color: #666;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #2b5876, #4e4376);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* FAQ Section */
+        .faq-container {
+            margin-bottom: 50px;
+        }
+        
+        .faq-item {
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+        
+        .faq-question {
+            padding: 20px;
+            background-color: #f9f9f9;
+            font-weight: 600;
+            color: #090909;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        .faq-question:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .faq-question::after {
+            content: '+';
+            font-size: 22px;
+            transition: transform 0.3s ease;
+        }
+        
+        .faq-item.active .faq-question::after {
+            transform: rotate(45deg);
+        }
+        
+        .faq-answer {
+            padding: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .faq-item.active .faq-answer {
+            padding: 20px;
+            max-height: 500px;
+        }
+        
+        .faq-answer p {
+            color: #555;
+            margin-bottom: 0;
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .banner h2 {
+                font-size: 28px;
+            }
+            
+            .banner p {
+                font-size: 16px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .section-title h2 {
+                font-size: 26px;
+            }
+            
+            .banner {
+                height: 200px;
+            }
+            
+            .competition-image {
+                height: 160px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <!-- Banner Section -->
+            <section class="banner">
+                <div class="banner-content">
+                    <h2>Robotics Competitions</h2>
+                    <p>Challenge yourself and showcase your robotics skills in our exciting competitions</p>
+                </div>
+            </section>
+
+            <!-- Competitions Section -->
+            <section>
+                <div class="section-title">
+                    <h2>Our Competitions</h2>
+                </div>
+                <div class="competitions-grid" id="competitions-container">
+                    <!-- Competition cards -->
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="Robo Football">
+                        </div>
+                        <div class="competition-content">
+                            <h3>Robo Football</h3>
+                            <p>Teams develop autonomous or remote-controlled robots to compete in a modified soccer match, requiring strategic programming and precise control systems.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Intermediate to Advanced</span>
+                                <span>Team Size: 3-5 members</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Robot size limit: 30cm x 30cm x 30cm</li>
+                                    <li>Match duration: 2 rounds of 5 minutes each</li>
+                                    <li>Teams must design defensive and offensive strategies</li>
+                                    <li>Robots must detect and manipulate a specialized ball</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="Line Follower">
+                        </div>
+                        <div class="competition-content">
+                            <h3>Line Follower</h3>
+                            <p>Participants build robots that autonomously follow a black line on a white surface, navigating through various challenges like curves, intersections, and breaks.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Intermediate to Advanced</span>
+                                <span>Team Size: 1-2 members</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Course includes sharp turns, gaps, and intersections</li>
+                                    <li>Scoring based on completion time and accuracy</li>
+                                    <li>Robots must use sensors to detect the line</li>
+                                    <li>Maximum dimensions: 20cm x 20cm x 20cm</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="Robo Race">
+                        </div>
+                        <div class="competition-content">
+                            <h3>Robo Race</h3>
+                            <p>A high-speed obstacle course for remote-controlled robots where participants navigate through challenging terrain while racing against the clock.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Intermediate to Advanced</span>
+                                <span>Team Size: 1-2 members</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Obstacle course with ramps, tunnels, and barriers</li>
+                                    <li>Time penalties for hitting obstacles</li>
+                                    <li>Multiple rounds with increasing difficulty</li>
+                                    <li>Focus on speed, control, and maneuverability</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="Circuit Debugging">
+                        </div>
+                        <div class="competition-content">
+                            <h3>Circuit Debugging</h3>
+                            <p>Participants are presented with faulty electronic circuits and must identify and fix issues using diagnostic tools and their knowledge of electronics.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Beginner to Intermediate</span>
+                                <span>Team Size: Individual</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Timed rounds with increasing complexity</li>
+                                    <li>Requires troubleshooting skills and electronics knowledge</li>
+                                    <li>Participants must document their diagnostic process</li>
+                                    <li>Tools and test equipment provided</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="CAD Modeling">
+                        </div>
+                        <div class="competition-content">
+                            <h3>CAD Modeling</h3>
+                            <p>A design competition where participants create detailed 3D models of robotic systems or components using professional CAD software within a time limit.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Beginner to Intermediate</span>
+                                <span>Team Size: Individual</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Design based on provided specifications</li>
+                                    <li>Judged on accuracy, efficiency, and creativity</li>
+                                    <li>Must include assembly instructions</li>
+                                    <li>Participants must bring their own laptops with CAD software</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="competition-card">
+                        <div class="competition-image">
+                            <img src="/api/placeholder/350/200" alt="Robo Sumo">
+                        </div>
+                        <div class="competition-content">
+                            <h3>Robo Sumo</h3>
+                            <p>Robots compete in a sumo-style contest where the objective is to push the opponent out of a circular ring without being pushed out first.</p>
+                            <div class="competition-info">
+                                <span>Difficulty: Intermediate to Advanced</span>
+                                <span>Team Size: 1-2 members</span>
+                            </div>
+                            <div class="competition-details">
+                                <h4>Competition Details:</h4>
+                                <ul>
+                                    <li>Weight classes: Lightweight (500g) and Heavyweight (3kg)</li>
+                                    <li>Round-robin tournament format with elimination finals</li>
+                                    <li>Robots must include autonomous detection systems</li>
+                                    <li>Matches last 3 minutes or until one robot is pushed out</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- FAQ Section -->
+            <section>
+                <div class="section-title">
+                    <h2>Frequently Asked Questions</h2>
+                </div>
+                <div class="faq-container">
+                    <div class="faq-item">
+                        <div class="faq-question">How do I register for competitions?</div>
+                        <div class="faq-answer">
+                            <p>Registration for all competitions is available through our online portal. Robo Club members can register with their membership ID for discounted fees. Non-members can also participate by filling out the general registration form and paying the standard entry fee. Registration typically opens 4 weeks before the competition and closes 1 week prior to the event date. Team registrations require information for all team members.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What are the eligibility requirements?</div>
+                        <div class="faq-answer">
+                            <p>Most competitions are open to undergraduate and graduate students. Some events have specific divisions for different experience levels (beginner, intermediate, advanced). High school students may participate in certain competitions with parental consent. For team-based competitions, all team members must be enrolled students, though they can be from different institutions. Some advanced competitions may require participants to have previous experience or to have qualified through preliminary rounds.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Do I need to bring my own equipment?</div>
+                        <div class="faq-answer">
+                            <p>For most competitions, participants are required to bring their own robots and equipment. The Robo Club provides the competition arena, power outlets, and basic tools. For competitions like Circuit Debugging, we provide the circuit boards and components. CAD Modeling requires participants to bring their own laptops with installed software. We recommend checking the specific equipment requirements for each competition, which are detailed on the competition registration page.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Are there prizes for winners?</div>
+                        <div class="faq-answer">
+                            <p>Yes, all competitions offer prizes for top performers. Typically, first, second, and third place winners receive trophies and certificates. Many competitions also include cash prizes or sponsored awards from industry partners. The prize pool varies by competition, with major events offering larger rewards. Additionally, exceptional participants may receive special recognition or invitations to represent the university at national-level competitions. All participants receive a certificate of participation, and special awards are given for innovation and technical excellence.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">Can I participate in multiple competitions?</div>
+                        <div class="faq-answer">
+                            <p>Yes, you can register for multiple competitions during the same event, provided there are no scheduling conflicts. We design the competition schedule to minimize overlaps between events. If you're participating in multiple competitions, you'll receive a discounted registration fee for additional events. However, we recommend carefully considering your capacity to prepare for multiple events, as each competition requires significant preparation and focus. For team-based competitions, team composition may vary between different events.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">How can I prepare for competitions?</div>
+                        <div class="faq-answer">
+                            <p>The Robo Club offers several resources to help participants prepare. We host weekly workshop sessions where you can learn relevant skills and techniques. For each competition, detailed rules and guidelines are available on our website. We also organize pre-competition practice sessions where you can test your robots in conditions similar to the actual competition. Additionally, mentors and previous winners are available for consultation during designated office hours. We recommend starting your preparation at least 4-6 weeks before the competition date.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">What are the judging criteria?</div>
+                        <div class="faq-answer">
+                            <p>Judging criteria vary by competition type. For performance-based competitions like Line Follower and Robo Race, results are based on objective measures such as completion time and accuracy. For design-oriented competitions like CAD Modeling, judging includes creativity, technical complexity, practicality, and presentation quality. All judging panels include faculty members and industry professionals. The complete judging criteria for each competition are provided in the competition handbook, which is shared with all registered participants two weeks before the event.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- JavaScript for FAQ Toggle -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const faqQuestions = document.querySelectorAll('.faq-question');
+            
+            faqQuestions.forEach(question => {
+                question.addEventListener('click', function() {
+                    // Toggle active class on the parent item
+                    const faqItem = this.parentElement;
+                    faqItem.classList.toggle('active');
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,932 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Robo Club - Members</title>
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Roboto', Arial, sans-serif;
+        }
+        
+        body {
+            background-color: #f0f2f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(to right, #2c3e50, #4ca1af);
+            color: white;
+            padding: 1.5rem 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img {
+            width: 50px;
+            height: 50px;
+            margin-right: 10px;
+        }
+        
+        .logo h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 2rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0;
+            position: relative;
+            transition: all 0.3s;
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: white;
+            transition: width 0.3s;
+        }
+        
+        nav ul li a:hover:after {
+            width: 100%;
+        }
+        
+        nav ul li a.active {
+            font-weight: 700;
+        }
+        
+        nav ul li a.active:after {
+            width: 100%;
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: white;
+            margin: 5px;
+            transition: all 0.3s ease;
+        }
+        
+        /* Main Content Styles */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 2rem;
+        }
+        
+        .page-title {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 2.5rem;
+            color: #3a0ca3;
+        }
+        
+        .subtitle {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: #050000;
+            font-size: 1.2rem;
+            font-style: italic;
+            font-weight: 30px;
+        }
+        
+        .filter-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .search-box {
+            position: relative;
+            flex: 1;
+            max-width: 300px;
+        }
+        
+        .search-box input {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            font-size: 0.9rem;
+            transition: all 0.3s;
+        }
+        
+        .search-box input:focus {
+            border-color: #ac6eb8;
+            box-shadow: 0 0 5px rgba(76, 161, 175, 0.5);
+        }
+        
+        .filter-options {
+            display: flex;
+            gap: 1rem;
+        }
+        
+        .filter-btn {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: #2c3e50;
+            color: white;
+            border-color: #2c3e50;
+        }
+        
+        /* Members Grid */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+        
+        .member-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .member-header {
+            position: relative;
+            height: 120px;
+            background: linear-gradient(135deg, #3a0ca3,#f72585 );
+        }
+        
+        .member-avatar {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background-color: white;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            overflow: hidden;
+            border: 5px solid white;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .member-info {
+            padding: 60px 20px 20px;
+            text-align: center;
+        }
+        
+        .member-name {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: #2c3e50;
+        }
+        
+        .member-role {
+            font-size: 0.95rem;
+            color: #933a85;
+            font-weight: 500;
+            margin-bottom: 15px;
+        }
+        
+        .member-desc {
+            font-size: 0.9rem;
+            color: #070303;
+            margin-bottom: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .member-social {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+        
+        .social-icon {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #f0f2f5;
+            color: #555;
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+        
+        .social-icon:hover {
+            background-color: #911f69;
+            color: white;
+        }
+        
+        .member-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+        }
+        
+        .badge {
+            font-size: 0.7rem;
+            padding: 3px 10px;
+            border-radius: 12px;
+            background-color: #f0f2f5;
+        }
+        
+        .badge.robotics {
+            background-color: #e3f2fd;
+            color: #1976d2;
+        }
+        
+        .badge.coding {
+            background-color: #e8f5e9;
+            color: #388e3c;
+        }
+        
+        .badge.electronics {
+            background-color: #fff3e0;
+            color: #f57c00;
+        }
+        
+        .badge.design {
+            background-color: #f3e5f5;
+            color: #8e24aa;
+        }
+        
+        /* Load More Section */
+        .load-more-container {
+            text-align: center;
+            margin-top: 3rem;
+            margin-bottom: 2rem;
+        }
+        
+        .load-more-btn {
+            background-color: #2c3e50;
+            color: white;
+            border: none;
+            padding: 10px 30px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .load-more-btn:hover {
+            background-color: #1a2530;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Join Team Section */
+        .join-team {
+            background-color: white;
+            padding: 3rem 2rem;
+            text-align: center;
+            border-radius: 10px;
+            margin-top: 4rem;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .join-team h2 {
+            font-size: 2rem;
+            color: #2c3e50;
+            margin-bottom: 1rem;
+        }
+        
+        .join-team p {
+            max-width: 600px;
+            margin: 0 auto 2rem;
+            color: #666;
+        }
+        
+        .apply-btn {
+            background-color: #4ca1af;
+            color: white;
+            border: none;
+            padding: 12px 35px;
+            border-radius: 25px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+        
+        .apply-btn:hover {
+            background-color: #2c3e50;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Footer Styles */
+        footer {
+            background-color: #2c3e50;
+            color: white;
+            padding: 3rem 0 1.5rem;
+        }
+        
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+        
+        .footer-section h3 {
+            font-size: 1.2rem;
+            margin-bottom: 1.2rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background-color: #4ca1af;
+        }
+        
+        .footer-section p, .footer-section address {
+            font-size: 0.9rem;
+            color: #ccc;
+            margin-bottom: 1rem;
+            line-height: 1.6;
+        }
+        
+        .footer-links ul {
+            list-style: none;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: #ccc;
+            text-decoration: none;
+            transition: color 0.3s;
+            font-size: 0.9rem;
+        }
+        
+        .footer-links a:hover {
+            color: #4ca1af;
+        }
+        
+        .contact-info div {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        
+        .contact-info i {
+            margin-right: 10px;
+            color: #4ca1af;
+        }
+        
+        .social-footer {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-footer a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+        
+        .social-footer a:hover {
+            background-color: #4ca1af;
+            transform: translateY(-3px);
+        }
+        
+        .footer-bottom {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem 0;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 2rem;
+        }
+        
+        .footer-bottom p {
+            font-size: 0.9rem;
+            color: #aaa;
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            width: 100%;
+            max-width: 600px;
+            position: relative;
+            box-shadow: 0 5px 30px rgba(0, 0, 0, 0.3);
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: #777;
+            line-height: 1;
+        }
+        
+        .close-modal:hover {
+            color: #333;
+        }
+        
+        .modal-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .modal-header h2 {
+            font-size: 1.8rem;
+            color: #2c3e50;
+        }
+        
+        .member-details {
+            display: flex;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .member-details-avatar {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .member-details-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .member-details-info {
+            flex: 1;
+        }
+        
+        .member-details-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #a74fa4;
+            margin-bottom: 5px;
+        }
+        
+        .member-details-role {
+            font-size: 1.1rem;
+            color: #4ca1af;
+            margin-bottom: 15px;
+        }
+        
+        .member-contact {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        
+        .member-contact a {
+            color: #555;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            font-size: 0.9rem;
+        }
+        
+        .member-contact a i {
+            margin-right: 8px;
+            color: #4ca1af;
+        }
+        
+        .member-details-badges {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        
+        .member-bio {
+            margin-top: 1.5rem;
+        }
+        
+        .member-bio h3 {
+            font-size: 1.2rem;
+            color: #9f4c95;
+            margin-bottom: 10px;
+        }
+        
+        .member-bio p {
+            color: #666;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .member-projects {
+            margin-top: 1.5rem;
+        }
+        
+        .member-projects h3 {
+            font-size: 1.2rem;
+            color: #2c3e50;
+            margin-bottom: 15px;
+        }
+        
+        .projects-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+        }
+        
+        .project-item {
+            background-color: #f0f2f5;
+            padding: 10px;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        .project-item img {
+            width: 100%;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            margin-bottom: 8px;
+        }
+        
+        .project-item p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+        
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                padding: 0 1.5rem;
+            }
+            
+            .logo h1 {
+                font-size: 1.5rem;
+            }
+            
+            nav {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 60%;
+                height: 100vh;
+                background-color: #2c3e50;
+                z-index: 999;
+                transition: right 0.3s;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+            }
+            
+            nav.active {
+                right: 0;
+            }
+            
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            nav ul li {
+                margin: 1.5rem 0;
+            }
+            
+            .hamburger {
+                display: block;
+                z-index: 1000;
+            }
+            
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+            
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+            
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+            
+            main {
+                padding: 0 1.5rem;
+            }
+            
+            .page-title {
+                font-size: 2rem;
+            }
+            
+            .filter-container {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 1rem;
+            }
+            
+            .search-box {
+                max-width: 100%;
+                width: 100%;
+            }
+            
+            .filter-options {
+                width: 100%;
+                overflow-x: auto;
+                padding-bottom: 10px;
+            }
+            
+            .member-details {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+            
+            .member-contact {
+                justify-content: center;
+            }
+            
+            .member-details-badges {
+                justify-content: center;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .page-title {
+                font-size: 1.8rem;
+            }
+            
+            .subtitle {
+                font-size: 1rem;
+            }
+            
+            .modal-content {
+                padding: 1.5rem;
+            }
+            
+            .member-details-avatar {
+                width: 120px;
+                height: 120px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header with Navigation -->
+    
+    <!-- Main Content -->
+    <main>
+        <h1 class="page-title">Our Team Members</h1>
+        <p class="subtitle">Meet the talented minds behind Robo Club's innovative projects and activities</p>
+        
+        <!-- Filter and Search -->
+        <div class="filter-container">
+            <div class="search-box">
+                <input type="text" id="member-search" placeholder="Search members...">
+            </div>
+        </div>
+        
+        <!-- Members Grid -->
+        <div class="members-grid">
+            <!-- Member 1 -->
+            <div class="member-card" data-category="executives" data-skills="robotics,coding">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Alex Johnson</h3>
+                    <p class="member-role">Club President</p>
+                    <p class="member-desc">Robotics enthusiast with expertise in autonomous systems and machine learning.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge robotics">Robotics</span>
+                        <span class="badge coding">Coding</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 2 -->
+            <div class="member-card" data-category="executives" data-skills="electronics,design">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Samantha Lee</h3>
+                    <p class="member-role">Vice President</p>
+                    <p class="member-desc">Hardware specialist with a passion for creating innovative electronic solutions.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge electronics">Electronics</span>
+                        <span class="badge design">Design</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 3 -->
+            <div class="member-card" data-category="executives" data-skills="coding,robotics">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Michael Zhang</h3>
+                    <p class="member-role">Technical Lead</p>
+                    <p class="member-desc">Software developer specializing in embedded systems and computer vision.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge coding">Coding</span>
+                        <span class="badge robotics">Robotics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 4 -->
+            <div class="member-card" data-category="members" data-skills="design,electronics">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Emily Rodriguez</h3>
+                    <p class="member-role">Design Specialist</p>
+                    <p class="member-desc">Creative designer with expertise in 3D modeling and prototyping for robotics.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge design">Design</span>
+                        <span class="badge electronics">Electronics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 5 -->
+            <div class="member-card" data-category="mentors" data-skills="coding,robotics">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">Dr. James Wilson</h3>
+                    <p class="member-role">Faculty Advisor</p>
+                    <p class="member-desc">Professor with research focus on robotics and artificial intelligence.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge coding">Coding</span>
+                        <span class="badge robotics">Robotics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member 6 -->
+            <div class="member-card" data-category="members" data-skills="coding,electronics">
+                <div class="member-header">
+                    <div class="member-avatar">
+                        <img src="/api/placeholder/400/320" alt="Member Avatar">
+                    </div>
+                </div>
+                <div class="member-info">
+                    <h3 class="member-name">David Patel</h3>
+                    <p class="member-role">Software Engineer</p>
+                    <p class="member-desc">Expert in robotics software architecture and sensor integration systems.</p>
+                    <div class="member-social">
+                        <a href="#" class="social-icon">
+                            <i>in</i>
+                        </a>
+                        <a href="#" class="social-icon">
+                            <i>@</i>
+                        </a>
+                    </div>
+                    <div class="member-badges">
+                        <span class="badge coding">Coding</span>
+                        <span class="badge electronics">Electronics</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Member
